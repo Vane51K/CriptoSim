@@ -1,7 +1,7 @@
 # CriptoSim - Simulador de Compra y Venta de Criptomonedas
 
 <p align="center">
-  <img src="https://media0.giphy.com/media/Tv5q9lCP95ixcyk6w5/giphy.gif" width="300"/>
+  <img src="img/criptosim-crypto-vibes.gif" alt="CriptoSim" width="300"/>
 </p>
 
 
