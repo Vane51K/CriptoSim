@@ -1,7 +1,7 @@
 # CriptoSim - Simulador de Compra y Venta de Criptomonedas
 
 <p align="center">
-  <img <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/Tv5q9lCP95ixcyk6w5" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/magicedenofficial-meme-crypto-vibes-Tv5q9lCP95ixcyk6w5">via GIPHY</a></p>/>
+  <img src="https://media0.giphy.com/media/Tv5q9lCP95ixcyk6w5/giphy.gif" width="300"/>
 </p>
 
 
