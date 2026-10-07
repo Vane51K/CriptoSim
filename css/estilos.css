@@ -1,0 +1,2469 @@
+/* ============================================================
+   CriptoSim - Hoja de estilos principal
+
+   Paleta "Brasa", cÃƒÆ’Ã‚Â¡lida. Los cuatro colores base son:
+     #EBE8DB  crema,  fondo: la superficie donde se vive
+     #3D0301  brasa,   tinta: texto y bordes fuertes
+     #B03052  carmÃƒÆ’Ã‚Â­n,  primario: botones, enlaces, acentos
+     #D76C82  rosa,    decorativo: halos, barras, brillos
+
+   REGLA: todo lo demÃƒÆ’Ã‚Â¡s se deriva de esos cuatro. Si un color no
+   estÃƒÆ’Ã‚Â¡ declarado en este bloque, no deberÃƒÆ’Ã‚Â­a estar escrito a mano
+   en ninguna regla. Se agrega como token aquÃƒÆ’Ã‚Â­ primero.
+
+   CONTRASTES: verificados con la fÃƒÆ’Ã‚Â³rmula de WCAG 2.1. Todos los
+   pares de texto superan 4.5:1. El rosa de marca NO llega a 4.5:1
+   sobre crema (da 2.69:1), por eso queda vetado como color de
+   texto y de enlace: solo decora.
+   ============================================================ */
+
+:root {
+    /* ---- Los cuatro de marca ---- */
+    --marca-brasa:   #3D0301;
+    --marca-carmÃƒÆ’Ã‚Â­n:  #B03052;
+    --marca-rosa:    #D76C82;
+    --marca-crema:   #EBE8DB;
+
+    /* ---------- Texto ----------
+       El texto no es negro puro. La brasa es un marrÃƒÆ’Ã‚Â³n casi negro
+       con calor: leer un pÃƒÆ’Ã‚Â¡rrafo largo en negro sobre crema cansa
+       menos que en #000, y mantiene la paleta en lugar de abrir
+       un agujero. */
+    --color-texto:        #3D0301;  /* 14.11:1 sobre crema */
+    --color-texto-suave:  #6E4240;  /*  6.79:1 sobre crema */
+    --color-light:        #EBE8DB;  /* texto sobre carmÃƒÆ’Ã‚Â­n */
+
+    /* ---------- Superficies ----------
+       El fondo es crema, el mÃƒÆ’Ã‚Â¡s opaco de la paleta, y las tarjetas
+       se separan aclarÃƒÆ’Ã‚Â¡ndolo un poco mÃƒÆ’Ã‚Â¡s. En tema claro la
+       jerarquÃƒÆ’Ã‚Â­a la hace la sombra, no la diferencia de tono: por
+       eso los pasos son sutiles y las sombras cÃƒÆ’Ã‚Â¡lidas. */
+    --color-fondo:            #EBE8DB;
+    --color-fondo-hondo:      #E4E1D4;  /* zonas hundidas, tablas alternas */
+    --color-fondo-mas-hondo:  #D8D4C4;  /* cabecera, pie */
+    --color-superficie:       #F9F8F4;  /* tarjetas sobre la crema */
+    --color-superficie-tinte: #F5F3E9;  /* variante para estados suaves */
+    --color-superficie-tinte-alta: #FDFCF8; /* realce, campos de formulario */
+    --color-fondo-tinte:      #EFEEE3;
+    --color-borde:            #CBC6B3;  /* 1.39:1 contra la crema */
+
+    /* ---------- Acentos ----------
+       Escala del carmÃƒÆ’Ã‚Â­n. Sobre crema da 5.04:1, asÃƒÆ’Ã‚Â­ que sirve
+       para texto, no solo para rellenos.
+
+       El hover se HUNDE. Subir la luminosidad sobre un fondo ya
+       claro baja el contraste del texto justo cuando el usuario
+       estÃƒÆ’Ã‚Â¡ mirando el botÃƒÆ’Ã‚Â³n, y ademÃƒÆ’Ã‚Â¡s "aclarar" da sensaciÃƒÆ’Ã‚Â³n de
+       desactivado, no de presiÃƒÆ’Ã‚Â³n. */
+    --color-primary-alto:   #C4436A;  /* luz del borde superior */
+    --color-primary:        #B03052;  /* cuerpo en reposo, 5.04:1 */
+    --color-primary-hover:  #86243E;  /* hover/activo, 7.32:1 */
+    --color-primary-oscuro: #742036;  /* sombra del borde inferior */
+    --color-primary-claro:  #F3D9DF;  /* relleno tenue de acento */
+    --color-secondary:      #D76C82;  /* SOLO decorativo: 2.69:1 */
+    --color-borde-primario: #9B2A48;  /* borde de ÃƒÆ’Ã‚Â©nfasis, 6.07:1 */
+
+    /* ---------- SemÃƒÆ’Ã‚Â¡nticos ----------
+       Los tres se oscurecieron multiplicando su propio RGB, no
+       mezclÃƒÆ’Ã‚Â¡ndolos con la brasa: mezclar convertÃƒÆ’Ã‚Â­a el verde en
+       oliva y el ÃƒÆ’Ã‚Â¡mbar en barro.
+
+       Sobre crema los originales quedaban ilegibles (1.96, 2.76
+       y 1.82), asÃƒÆ’Ã‚Â­ que ningÃƒÆ’Ã‚Âºn par habrÃƒÆ’Ã‚Â­a pasado el contraste.
+
+       El error sigue sin ser rojo. Con el carmÃƒÆ’Ã‚Â­n como primario, un
+       rojo se confunde con el botÃƒÆ’Ã‚Â³n de comprar: comprar y fallar
+       se leerÃƒÆ’Ã‚Â­an igual. */
+    --color-exito:         #30664C;  /*  5.46:1 */
+    --color-exito-tenue:   #DCEBE1;
+    --color-error:         #7C3821;  /*  6.99:1 */
+    --color-error-tenue:   #F3E0D6;
+    --color-alerta:        #7B5923;  /*  5.19:1 */
+    --color-alerta-tenue:  #F2E6D0;
+
+    /* ---------- Banda oscura (cabecera y pie) ----------
+       El header y el footer son la unica superficie del sistema que
+       sigue siendo oscura sobre el cuerpo crema. Invertirlos ancla
+       la pagina: el usuario entra y sale siempre por el mismo marco,
+       y el contenido claro queda flotando en el medio.
+
+       Por eso llevan su propia escala de texto. No se pueden reusar
+       los tokens claros: --color-texto-suave (#6E4240) sobre brasa
+       baja a 2.1:1 y el menu se vuelve ilegible. */
+    --color-banda:            #4C0027;  /* fondo de la banda */
+    --color-banda-hondo:      #4C0027;  /* pie */
+    --color-banda-texto:      #EBE8DB;  /* 14.11:1 sobre la banda */
+    --color-banda-texto-suave: rgba(235, 232, 219, 0.74);
+    --color-banda-borde:      rgba(215, 108, 130, 0.34);
+    --color-banda-hover:      rgba(215, 108, 130, 0.18);
+
+    --radio: 10px;
+    --radio-chico: 6px;
+    --transicion: 160ms ease;
+
+    /* ---------- Sistema de profundidad ----------
+       Una sola sombra siempre se ve plana. La profundidad sale de
+       CAPAS: una sombra de contacto oscura y pegada al elemento,
+       mÃƒÆ’Ã‚Â¡s una sombra ambiental difusa y separada, mÃƒÆ’Ã‚Â¡s un brillo
+       interior superior que simula que la luz viene de arriba.
+       Ese trÃƒÆ’Ã‚Â­o es lo que da la sensaciÃƒÆ’Ã‚Â³n de volumen.
+
+       En tema claro el negro puro de las sombras se ve sucio
+       sobre crema: tira a gris y ensucia. El negro aquÃƒÆ’Ã‚Â­ es la
+       brasa muy oscurecida, para que la sombra conserve calor. */
+    --sombra-1: 0 1px 2px rgba(61, 3, 1, 0.10),
+                0 2px 6px rgba(61, 3, 1, 0.07);
+    --sombra-2: 0 2px 4px rgba(61, 3, 1, 0.11),
+                0 6px 16px rgba(61, 3, 1, 0.09);
+    --sombra-3: 0 4px 8px rgba(61, 3, 1, 0.13),
+                0 14px 34px rgba(61, 3, 1, 0.12);
+    --sombra-4: 0 8px 18px rgba(61, 3, 1, 0.16),
+                0 26px 60px rgba(61, 3, 1, 0.17);
+
+    /* Brillo interior del borde superior. Sobre crema simula el
+       rebote de la luz y separa la tarjeta del fondo. */
+    --luz-superior:        inset 0 1px 0 rgba(255, 255, 255, 0.70);
+    --luz-superior-fuerte: inset 0 1px 0 rgba(255, 255, 255, 0.90);
+
+    /* Superficie con degradado: nunca un color plano. El degradado
+       va de casi-blanco a crema, nunca al revÃƒÆ’Ã‚Â©s, para que la
+       tarjeta se vea elevada sobre el fondo. */
+    --superficie-gradiente:      linear-gradient(160deg, #FDFCF8 0%, #F9F8F4 55%, #F5F3E9 100%);
+    --superficie-gradiente-alta: linear-gradient(160deg, #FFFFFF 0%, #FDFCF8 55%, #FAF9F4 100%);
+
+    /* Halo del color primario, para acentos y para la mascota.
+       El rosa sÃƒÆ’Ã‚Â­ sirve acÃƒÆ’Ã‚Â¡ porque no tiene que leerse: es luz. */
+    --halo-primario: 0 0 0 1px rgba(176, 48, 82, 0.28),
+                     0 6px 22px rgba(176, 48, 82, 0.22);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Luz ambiental fija desde arriba. Sin esto el fondo es un bloque
+   de color morto y todo se ve plano por mas sombras que tengan
+   las tarjetas. Va en un pseudoelemento para no afectar el flujo.
+
+   En tema claro los albedos bajan mucho: el carmin de marca al 34%
+   sobre crema se lee como una mancha rosa sucia, no como luz. Aqui
+   la luz es una mezcla del rosa de marca con blanco, al 12-16%. */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(1100px 520px at 50% -140px, rgba(255, 255, 255, 0.70), transparent 68%),
+        radial-gradient(760px 420px at 92% 4%, rgba(215, 108, 130, 0.14), transparent 70%),
+        radial-gradient(680px 420px at 4% 22%, rgba(215, 108, 130, 0.10), transparent 72%);
+}
+
+/* Grano finÃƒÆ’Ã‚Â­simo. Rompe la superficie lisa y da textura de papel
+   en lugar de plÃƒÆ’Ã‚Â¡stico. Es muy sutil a proposito.
+
+   El ruido es oscuro. Sobre crema, al mismo alfa que servia para
+   disimular el banding de un fondo profundo, ensucia: hay que
+   bajarlo a la mitad para que se lea como fibra y no como mugre. */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.22;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+/* El contenido va por encima de las capas de fondo */
+.cabecera,
+main,
+.pie {
+    position: relative;
+    z-index: 1;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transicion);
+}
+
+a:hover {
+    /* Antes el hover aclaraba a crema, porque el fondo era oscuro y
+       aclarar funcionaba como realce. Sobre crema, aclarar ES
+       desaparecer: el enlace se volvia crema sobre crema y se
+       perdia al pasar el mouse. Ahora el hover se hunde. */
+    color: var(--color-primary-hover);
+}
+
+/* ---------- Estructura ---------- */
+
+.contenedor {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+main.contenedor {
+    flex: 1;
+    padding-top: 32px;
+    padding-bottom: 48px;
+}
+
+/* ---------- Cabecera ---------- */
+
+.cabecera {
+    background-color: var(--color-banda);
+    border-bottom: 1px solid var(--color-banda-borde);
+    box-shadow: var(--sombra-2);
+}
+
+.cabecera-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 20px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+/* Sobre la banda oscura el hover no puede usar el carmin claro del
+   cuerpo: ahi el realce es aclarar, porque el fondo ya es el
+   profundo. El token de texto claro haria el logo invisible. */
+.logo:hover {
+    color: var(--color-banda-texto);
+}
+
+.logo-texto {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--color-banda-texto);
+}
+
+.logo-sub {
+    font-size: 0.72rem;
+    color: var(--color-banda-texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* El menu vive sobre la banda oscura, asi que usa la escala clara.
+   El rosa de marca (2.69:1 sobre crema) no llegaria ni a 3:1 aqui:
+   queda vetado como color de texto tambien en la banda. */
+.menu a {
+    padding: 9px 16px;
+    border-radius: var(--radio-chico);
+    color: var(--color-banda-texto-suave);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: all var(--transicion);
+}
+
+.menu a:hover {
+    background-color: var(--color-banda-hover);
+    color: var(--color-banda-texto);
+    border-color: var(--color-banda-borde);
+}
+
+.menu .boton-primario {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border-color: var(--color-primary);
+}
+
+.menu .boton-primario:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+}
+
+/* Salir es la unica accion destructiva del menu. Sobre la banda
+   oscura el rojo de marca (#7C3821) cae a 1.5:1, asi que el aviso
+   va en un rojo claro, el mismo criterio que el tema claro invertido:
+   sobre fondo oscuro el error se aclara, nunca se oscurece. */
+.menu .salir {
+    color: #E79A85;
+}
+
+.menu .salir:hover {
+    background-color: rgba(215, 108, 130, 0.20);
+    border-color: var(--color-banda-borde);
+    color: #F0AFA0;
+}
+
+/* El rosa de marca no puede ser fondo de nada que lleve texto
+   crema: da 2.4:1. El hover del boton se hunde a carmin oscuro. */
+
+.menu .salir {
+    color: var(--color-error);
+}
+
+.menu .salir:hover {
+    background-color: var(--color-error-tenue);
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+/* ---------- Alertas ---------- */
+
+.alerta {
+    padding: 13px 16px;
+    border-radius: var(--radio-chico);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    border-left: 3px solid;
+    /* Sobre crema el velo blanco al 3% no se ve. La alerta se
+       apoya en su barra lateral de color y en una superficie real. */
+    background: var(--color-superficie-tinte);
+    box-shadow: var(--sombra-1), var(--luz-superior);
+}
+
+.alerta ul {
+    padding-left: 18px;
+}
+
+.alerta-exito {
+    border-color: var(--color-exito);
+    color: var(--color-exito);
+    background: var(--color-exito-tenue);
+}
+
+.alerta-error {
+    border-color: var(--color-error);
+    color: var(--color-error);
+    background: var(--color-error-tenue);
+}
+
+/* Aviso informativo: el sistema funciona, pero algo quedo
+   degradado (por ejemplo, no se pudo refrescar el precio). */
+.alerta-info {
+    border-color: var(--color-alerta);
+    color: var(--color-alerta);
+    background: var(--color-alerta-tenue);
+}
+
+/* ---------- Botones ---------- */
+
+.boton {
+    display: inline-block;
+    padding: 11px 22px;
+    border-radius: var(--radio-chico);
+    border: 1px solid transparent;
+    font-size: 0.93rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--transicion);
+    text-align: center;
+    /* El boton tambien es un volumen: contacto + ambiental + luz
+       superior. Sin esto los botones quedan pegados al fondo. */
+    box-shadow: var(--sombra-1), var(--luz-superior);
+}
+
+.boton:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(61, 3, 1, 0.24);
+}
+
+.boton-primario {
+    background: linear-gradient(180deg, var(--color-primary-alto) 0%,
+                                var(--color-primary) 55%,
+                                var(--color-primary-oscuro) 100%);
+    color: var(--color-light);
+    border-color: var(--color-primary-oscuro);
+    box-shadow: var(--sombra-2), var(--luz-superior-fuerte),
+                0 3px 14px rgba(176, 48, 82, 0.30);
+}
+
+.boton-primario:hover {
+    background: linear-gradient(180deg, var(--color-primary) 0%,
+                                var(--color-primary-hover) 55%,
+                                var(--color-primary-oscuro) 100%);
+    border-color: var(--color-primary-hover);
+    color: var(--color-light);
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-3), var(--luz-superior-fuerte),
+                0 6px 22px rgba(176, 48, 82, 0.38);
+}
+
+/* Boton destructivo. No es rojo puro: con el carmin de primario al
+   lado, un rojo se confunde con "confirmar". Se va al marron de la
+   paleta de error, que el usuario ya aprende como "algo salio mal". */
+.boton-peligro {
+    background: linear-gradient(180deg, #96502F 0%,
+                                var(--color-error) 55%,
+                                #5E2A17 100%);
+    color: #FFF6F1;
+    border-color: #5E2A17;
+    box-shadow: var(--sombra-2), var(--luz-superior-fuerte),
+                0 3px 14px rgba(124, 56, 33, 0.28);
+}
+
+.boton-peligro:hover {
+    background: linear-gradient(180deg, var(--color-error) 0%,
+                                #622D19 55%, #4E2113 100%);
+    border-color: #4E2113;
+    color: #FFF6F1;
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-3), var(--luz-superior-fuerte),
+                0 6px 22px rgba(124, 56, 33, 0.36);
+}
+
+/* El secundario ya no puede ser un velo blanco: sobre crema ese
+   blanco al 5% no se ve. Pasa a ser una superficie de verdad, y el
+   hover tiÃƒÆ’Ã‚Â±e de carmin claro en vez de oscurecer. */
+.boton-secundario {
+    background: linear-gradient(180deg, #FEFDFA 0%, var(--color-superficie-tinte) 100%);
+    color: var(--color-texto);
+    border-color: var(--color-borde-primario);
+}
+
+.boton-secundario:hover {
+    background: linear-gradient(180deg, var(--color-primary-claro) 0%,
+                                #EBC9D2 100%);
+    border-color: var(--color-primary);
+    color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-2), var(--luz-superior);
+}
+
+.boton-bloque {
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* ---------- Formularios ---------- */
+
+label {
+    display: block;
+    margin: 16px 0 6px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--color-texto-suave);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 11px 13px;
+    background-color: var(--color-superficie-tinte-alta);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-chico);
+    color: var(--color-texto);
+    font-size: 0.94rem;
+    font-family: inherit;
+    transition: border-color var(--transicion);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* Recarga de saldo: monto y boton en la misma linea */
+.recarga-fila {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.recarga-fila input {
+    flex: 1;
+    max-width: 260px;
+}
+
+.ayuda {
+    font-size: 0.78rem;
+    color: var(--color-texto-suave);
+    margin-top: 5px;
+}
+
+/* ---------- Portada ---------- */
+
+.portada {
+    text-align: center;
+    padding: 56px 20px 44px;
+    position: relative;
+}
+
+/* La portada deja de ser un bloque de texto plano: la mascota
+   entra como companion y el conjunto se lee como una escena. */
+.portada-escena {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 30px;
+}
+
+.portada-texto {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.portada-escena > .simi-escena {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.portada-botonera {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.portada-botonera .boton {
+    min-width: 158px;
+}
+
+/* ---------- Mascota ---------- */
+
+.mascota {
+    display: block;
+    border-radius: 50%;
+    /* Es un JPEG: no tiene transparencia. El marco circular es lo
+       que oculta el borde rectangular y evita que se vea un
+       cuadrilatero recortado pegado al fondo. */
+    object-fit: cover;
+    object-position: center 28%;
+    background: var(--superficie-gradiente-alta);
+    border: 2px solid var(--color-borde-primario);
+    box-shadow: var(--halo-primario), var(--sombra-3),
+                var(--luz-superior-fuerte);
+}
+
+.mascota-portada {
+    width: 236px;
+    height: 236px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Halo decorativo detras de la mascota. Se centra solo sobre la
+   figura con translate, asi no hay margenes negativos que haya que
+   recalcular cada vez que cambia el tamano del personaje. */
+.mascota-halo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(215, 108, 130, 0.30) 0%, transparent 66%);
+    z-index: 0;
+}
+
+/* ---------- Escena de SIMI ---------- */
+
+/* Agrupa burbuja + halo + imagen. Es lo que permite que la burbuja
+   quede anclada arriba de la mascota sin depender del grid de la
+   pagina. */
+.simi-escena {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: entrar-simi 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Ancla del halo y la imagen. Al ser su propio contexto de
+   posicionamiento, el halo queda centrado sobre el personaje
+   aunque la burbuja de arriba cambie de alto. */
+.simi-figura {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* La burbuja es lo que le da proposito a la mascota: dice algo
+   util del contexto en vez de ser solo decoracion.
+
+   El fondo es opaco a proposito. Con backdrop-filter la colita
+   quedaria sin el mismo desenfoque y se veria una costura. */
+.simi-burbuja {
+    position: relative;
+    z-index: 2;
+    max-width: 258px;
+    margin-bottom: 20px;
+    padding: 11px 16px;
+    border-radius: 14px;
+    background: var(--superficie-gradiente-alta);
+    border: 1px solid var(--color-borde-primario);
+    box-shadow: var(--sombra-2), var(--luz-superior-fuerte);
+    color: var(--color-texto);
+    font-size: 0.86rem;
+    line-height: 1.45;
+    text-align: center;
+    animation: entrar-burbuja 0.5s ease-out 0.45s both;
+}
+
+/* Colita de la burbuja. El color tiene que ser exactamente el
+   extremo inferior del gradiente o se ve la costura. */
+.simi-burbuja::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: #FDFCF8;
+}
+
+.simi-burbuja strong {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* Version compacta para estados vacios dentro de paneles. */
+.simi-escena-vacia .simi-burbuja {
+    max-width: 300px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+}
+
+.mascota-vacia {
+    width: 104px;
+    height: 104px;
+    border-width: 1px;
+    box-shadow: 0 0 0 1px rgba(176, 48, 82, 0.28),
+                0 8px 20px rgba(61, 3, 1, 0.20);
+}
+
+/* ---------- SIMI anunciando el resultado de una operacion ----------
+   Es la escena mas chica: no tiene la pagina alrededor, solo el
+   mensaje de lo que paso. Por eso va sobre una tarjeta teñida con el
+   color del resultado y no flotando en la crema. */
+
+.simi-resultado {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 18px 16px;
+    border-radius: var(--radio);
+    box-shadow: var(--sombra-1), var(--luz-superior);
+}
+
+.simi-resultado-exito {
+    background-color: var(--color-exito-tenue);
+    border: 1px solid var(--color-exito);
+}
+
+.simi-resultado-error {
+    background-color: var(--color-error-tenue);
+    border: 1px solid var(--color-error);
+}
+
+.simi-escena-resultado .simi-burbuja {
+    max-width: 380px;
+    font-size: 0.86rem;
+    margin-bottom: 14px;
+    padding: 10px 14px;
+}
+
+.mascota-resultado {
+    width: 76px;
+    height: 76px;
+    border-width: 1px;
+    box-shadow: 0 0 0 1px rgba(176, 48, 82, 0.28),
+                0 6px 16px rgba(61, 3, 1, 0.18);
+}
+
+/* El halo de la portada mide 300px y centrado sobre un personaje de
+   76px se saldria de la tarjeta. Se achaza con la escena, no con el
+   personaje, para que siga siendo el mismo decorativo. */
+.simi-escena-resultado .mascota-halo {
+    width: 132px;
+    height: 132px;
+}
+
+.mascota-flotante {
+    animation: flotar 6s ease-in-out infinite;
+}
+
+@keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-9px); }
+}
+
+@keyframes entrar-simi {
+    from { opacity: 0; transform: translateY(14px) scale(0.94); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes entrar-burbuja {
+    from { opacity: 0; transform: translateY(-6px) scale(0.94); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mascota-flotante,
+    .simi-escena,
+    .simi-burbuja {
+        animation: none;
+    }
+
+    .tarjeta:hover,
+    .indicador:hover,
+    .paso:hover,
+    .boton-primario:hover,
+    .boton-secundario:hover {
+        transform: none;
+    }
+}
+
+.portada h1 {
+    font-size: 2.3rem;
+    margin-bottom: 16px;
+    line-height: 1.25;
+}
+
+.portada-sub {
+    color: var(--color-texto-suave);
+    max-width: 620px;
+    margin: 0 auto 28px;
+    font-size: 1.03rem;
+}
+
+/* ---------- Secciones y tarjetas ---------- */
+
+.seccion {
+    margin-top: 52px;
+}
+
+.seccion-titulo {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.grid-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.tarjeta {
+    background: var(--superficie-gradiente);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    padding: 22px;
+    box-shadow: var(--sombra-2), var(--luz-superior);
+    transition: border-color var(--transicion), transform var(--transicion),
+                box-shadow var(--transicion);
+}
+
+.tarjeta:hover {
+    border-color: var(--color-borde-primario);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-3), var(--luz-superior-fuerte);
+}
+
+.cripto-encabezado {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 16px;
+}
+
+.cripto-encabezado h3 {
+    font-size: 1.02rem;
+}
+
+.cripto-simbolo-texto {
+    font-size: 0.78rem;
+    color: var(--color-texto-suave);
+}
+
+.cripto-simbolo {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.cripto-precio {
+    font-size: 1.55rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.variacion {
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.variacion-sube {
+    color: var(--color-exito);
+}
+
+.variacion-baja {
+    color: var(--color-error);
+}
+
+/* ---------- Pasos ---------- */
+
+.grid-pasos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.paso {
+    background: var(--superficie-gradiente);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    padding: 24px;
+    box-shadow: var(--sombra-2), var(--luz-superior);
+    transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.paso:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-3), var(--luz-superior-fuerte);
+}
+
+.paso h3 {
+    margin: 12px 0 7px;
+    font-size: 1rem;
+}
+
+.paso p {
+    color: var(--color-texto-suave);
+    font-size: 0.88rem;
+}
+
+/* El numero va sobre carmin, no sobre el rosa de marca: el rosa con
+   texto crema se queda en 2.4:1 y el numero deja de leerse. Sobre
+   carmin el crema da 5.04:1. */
+.paso-numero {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ---------- Autenticacion ---------- */
+
+.auth-contenedor {
+    display: grid;
+    place-items: center;
+    padding: 30px 0;
+}
+
+.auth-tarjeta {
+    width: 100%;
+    max-width: 430px;
+    background: var(--superficie-gradiente-alta);
+    border: 1px solid var(--color-borde);
+    border-top: 3px solid var(--color-primary);
+    border-bottom: 3px solid var(--color-primary);
+    border-radius: var(--radio);
+    padding: 34px;
+    box-shadow: var(--sombra-4), var(--luz-superior-fuerte);
+}
+
+/* Logotipo arriba de la tarjeta de autenticacion. Centrado con margin
+   auto porque el resto del contenido de la tarjeta va a la izquierda. */
+.auth-logo {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto 18px;
+}
+
+.auth-tarjeta h1 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+}
+
+.auth-subtitulo {
+    color: var(--color-texto-suave);
+    font-size: 0.88rem;
+    margin-bottom: 22px;
+}
+
+.auth-pie {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.87rem;
+    color: var(--color-texto-suave);
+}
+
+/* ---------- Pie ---------- */
+
+/* El pie se apoya en un brasa un pelin mas profunda que la cabecera:
+   si fueran el mismo tono, la pagina cerraria con un bloque unico y
+   perderia el relieve de "marco". */
+.pie {
+    background-color: var(--color-banda-hondo);
+    border-top: 1px solid var(--color-banda-borde);
+    padding: 22px 0;
+    text-align: center;
+}
+
+.pie p {
+    font-size: 0.83rem;
+    color: var(--color-banda-texto-suave);
+}
+
+/* El aviso legal no puede ir en el ambar oscuro del tema claro:
+   sobre brasa cae a 1.4:1 y es el texto que mas debe leerse. */
+.pie-aviso {
+    color: #E0C489 !important;
+    font-size: 0.79rem !important;
+    margin-top: 4px;
+}
+
+/* ---------- Saludo ---------- */
+
+.saludo {
+    padding: 8px 0 4px;
+}
+
+.saludo h1 {
+    font-size: 1.7rem;
+    margin-bottom: 4px;
+}
+
+.saludo p {
+    color: var(--color-texto-suave);
+}
+
+/* ---------- Tarjetas de indicador ---------- */
+
+.tarjeta-etiqueta {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: var(--color-texto-suave);
+    margin-bottom: 8px;
+}
+
+.tarjeta-valor {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--color-texto);
+}
+
+.nota-construccion {
+    margin-top: 34px;
+    padding: 13px 16px;
+    border-left: 3px solid var(--color-borde-primario);
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-chico);
+    color: var(--color-texto-suave);
+    font-size: 0.86rem;
+}
+
+/* ---------- Indicadores del dashboard ---------- */
+
+.grid-indicadores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 16px;
+}
+
+.indicador {
+    background: var(--superficie-gradiente-alta);
+    border: 1px solid var(--color-borde);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radio);
+    padding: 19px 20px;
+    box-shadow: var(--sombra-2), var(--luz-superior);
+    transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.indicador:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-3), var(--luz-superior-fuerte);
+}
+
+.indicador-etiqueta {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: var(--color-texto-suave);
+    margin-bottom: 9px;
+}
+
+.indicador-valor {
+    font-size: 1.65rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.indicador-pie {
+    font-size: 0.78rem;
+    color: var(--color-texto-suave);
+    margin-top: 6px;
+}
+
+/* ---------- Columnas del dashboard ---------- */
+
+.dashboard-columnas {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 20px;
+    /* stretch (y no start) para que las dos columnas midan lo mismo:
+       con start la columna corta dejaba un hueco de fondo vacio. */
+    align-items: stretch;
+}
+
+.panel {
+    background: var(--superficie-gradiente);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    padding: 22px;
+    margin-top: 52px;
+    box-shadow: var(--sombra-3), var(--luz-superior);
+}
+
+/* Columna izquierda del dashboard: junta el resumen de portafolio
+   con el cuadro de SIMI. La columna derecha ("Tu actividad") es mas
+   alta y sin esto el resumen dejaba un hueco libre debajo. */
+.dashboard-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 52px;
+}
+
+.dashboard-columna > .panel {
+    margin-top: 0;
+}
+
+/* El cuadro de SIMI crece hasta ocupar lo que sobre en la columna,
+   para que no quede fondo vacio por debajo del consejo. */
+.dashboard-columna > .consejo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* ---------- Pensamientos de SIMI (dashboard) ---------- */
+
+.consejo-encabezado {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.consejo-cara {
+    width: 88px;
+    height: 88px;
+    flex: none;
+    object-fit: cover;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    box-shadow: var(--luz-superior);
+}
+
+.consejo .seccion-titulo {
+    margin-bottom: 4px;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.consejo-cuando {
+    font-size: 0.74rem;
+    color: var(--color-texto-suave);
+}
+
+.consejo-frase {
+    margin-top: 16px;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--color-texto);
+}
+
+.consejo-aviso {
+    /* auto: con la caja estirada el aviso queda pegado abajo y el
+       espacio libre se reparte en el medio. Sin caja estirada vale
+       lo mismo que 0 y separa igual gracias al padding-top. */
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed var(--color-borde);
+    font-size: 0.74rem;
+    color: var(--color-texto-suave);
+}
+
+.panel .seccion-titulo {
+    margin-top: 0;
+    font-size: 1.05rem;
+}
+
+.subtitulo-panel {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: var(--color-texto-suave);
+    margin: 22px 0 12px;
+}
+
+/* ---------- Barra de distribucion del portafolio ---------- */
+
+.barra-portafolio {
+    display: flex;
+    height: 30px;
+    border-radius: var(--radio-chico);
+    overflow: hidden;
+    background-color: var(--color-fondo-hondo);
+}
+
+.barra-segmento {
+    height: 100%;
+    transition: width 220ms ease;
+}
+
+.leyenda-portafolio {
+    list-style: none;
+    margin-top: 16px;
+}
+
+.leyenda-portafolio li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-borde);
+    font-size: 0.86rem;
+}
+
+.leyenda-portafolio li:last-child {
+    border-bottom: none;
+}
+
+.leyenda-punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.leyenda-nombre {
+    flex: 1;
+}
+
+.leyenda-valor {
+    font-weight: 600;
+}
+
+.leyenda-porcentaje {
+    color: var(--color-texto-suave);
+    min-width: 54px;
+    text-align: right;
+}
+
+/* ---------- Actividad ---------- */
+
+.actividad-resumen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.actividad-dato {
+    background-color: var(--color-superficie-tinte);
+    border-radius: var(--radio-chico);
+    padding: 15px;
+    text-align: center;
+}
+
+.actividad-numero {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.actividad-etiqueta {
+    font-size: 0.76rem;
+    color: var(--color-texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.actividad-lista {
+    list-style: none;
+}
+
+.actividad-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--color-borde);
+    font-size: 0.85rem;
+}
+
+.actividad-item:last-child {
+    border-bottom: none;
+}
+
+.actividad-descripcion {
+    flex: 1;
+    font-weight: 500;
+}
+
+.actividad-hora {
+    color: var(--color-texto-suave);
+    font-size: 0.76rem;
+    white-space: nowrap;
+}
+
+.enlace-subrayado {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid currentColor;
+}
+
+/* ---------- Badges ---------- */
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    white-space: nowrap;
+}
+
+.badge-compra {
+    background-color: var(--color-exito-tenue);
+    color: var(--color-exito);
+    border: 1px solid var(--color-exito);
+}
+
+.badge-venta {
+    background-color: var(--color-error-tenue);
+    color: var(--color-error);
+    border: 1px solid var(--color-error);
+}
+
+/* Estado de la cuenta. Comparte el molde de compra y venta: relleno
+   tenue, texto del color fuerte y borde del mismo color. Se distinguen
+   los tres con los semanticos de la paleta y no con un color nuevo:
+   activo es exito, suspendido es alerta, baja es gris neutro. */
+.badge-activo {
+    background-color: var(--color-exito-tenue);
+    color: var(--color-exito);
+    border: 1px solid var(--color-exito);
+}
+
+.badge-suspendido {
+    background-color: var(--color-alerta-tenue);
+    color: var(--color-alerta);
+    border: 1px solid var(--color-alerta);
+}
+
+.badge-baja {
+    background-color: var(--color-fondo-hondo);
+    color: var(--color-texto-suave);
+    border: 1px solid var(--color-borde);
+}
+
+/* ---------- Estado del mercado ---------- */
+
+.estado-mercado {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    color: var(--color-texto-suave);
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.punto-estado {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-exito);
+    box-shadow: 0 0 0 3px var(--color-exito-tenue);
+}
+
+.estado-nota {
+    font-size: 0.76rem;
+    opacity: 0.7;
+}
+
+/* Boton de refresco de precios. Va al final de la barra de estado
+   y empuja hacia la derecha con margin-left: auto. No se reusa
+   .boton-chico porque ese trae flex:1 pensado para las tarjetas
+   de cripto y estiraria el boton. */
+.form-refrescar {
+    margin: 0 0 0 auto;
+}
+
+.form-refrescar .boton {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+}
+
+/* ---------- Detalles de tarjetas de cripto ---------- */
+
+.cripto-acciones {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.boton-chico {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 0.83rem;
+}
+
+.poseida {
+    font-size: 0.78rem;
+    color: var(--color-texto-suave);
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid var(--color-borde);
+}
+
+/* ---------- Estados vacios ---------- */
+
+.vacio {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--color-texto-suave);
+}
+
+.vacio p {
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+}
+
+.sin-datos {
+    color: var(--color-texto-suave);
+    font-size: 0.86rem;
+    padding: 14px 0;
+}
+
+.precio-original {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--color-texto-suave);
+    margin-top: 3px;
+}
+
+/* ---------- Historial: filtros, tabla y paginacion ---------- */
+
+.filtros {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.filtros .seccion-titulo {
+    margin-bottom: 0;
+}
+
+.filtros-grupo {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filtro-chip {
+    display: inline-block;
+    padding: 7px 16px;
+    border: 1px solid var(--color-borde);
+    border-radius: 999px;
+    font-size: 0.83rem;
+    color: var(--color-texto-suave);
+    text-decoration: none;
+    transition: all var(--transicion);
+}
+
+.filtro-chip:hover {
+    color: var(--color-texto);
+    border-color: var(--color-primary);
+}
+
+.filtro-activo {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-light);
+    font-weight: 600;
+}
+
+.filtro-activo:hover {
+    color: var(--color-light);
+}
+
+.tabla-envoltura {
+    overflow-x: auto;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-chico);
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+    min-width: 640px;
+}
+
+.tabla thead th {
+    background-color: var(--color-fondo-hondo);
+    text-align: center;
+    padding: 13px 16px;
+    font-size: 0.73rem;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--color-texto-suave);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.tabla tbody td {
+    text-align: center;
+    padding: 13px 16px;
+    border-top: 1px solid var(--color-borde);
+    vertical-align: middle;
+}
+
+/* La fila de totales no tenia padding ni borde, asi que quedaba pegada
+   a las celdas y sin separacion respecto de la ultima fila. El rotulo
+   ("Valor total...") va a la izquierda, igual que la primera columna. */
+.tabla tfoot td {
+    text-align: center;
+    padding: 13px 16px;
+    border-top: 1px solid var(--color-borde);
+    vertical-align: middle;
+}
+
+.tabla tfoot td:first-child {
+    text-align: left;
+}
+
+.tabla tbody tr:first-child td {
+    border-top: none;
+}
+
+.tabla tbody tr {
+    transition: background-color var(--transicion);
+}
+
+.tabla tbody tr:hover {
+    background-color: var(--color-primary-claro);
+}
+
+/* La alineacion la define cada columna (thead th / tbody td / tfoot td);
+   esta clase solo aporta la tipografia de numeros tabulares. */
+.tabla-num {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.tabla-total {
+    font-weight: 600;
+}
+
+.tabla-cripto {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin-right: 7px;
+}
+
+.tabla-fecha {
+    color: var(--color-texto-suave);
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+/* El correo va debajo del nombre, en una sola linea mas chica. Sin
+   display:block se dibujaria en la misma linea y la celda del nombre
+   se estiria para que quepa el correo entero. */
+.tabla-correo {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.78rem;
+    color: var(--color-texto-suave);
+}
+
+/* Tablas con muchas columnas (listados de admin). La tabla base ya
+   tiene min-width: 640px; estas necesitan mas antes de que las
+   columnas de numeros se aplasten. */
+.tabla-ancha {
+    min-width: 900px;
+}
+
+/* Botones de accion de una fila. Cada boton va en su propio form
+   (por seguridad no se puede anidar un form dentro de otro), asi que
+   el contenedor es el que los acomoda en linea. */
+.tabla-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 156px;
+}
+
+.tabla-acciones .boton {
+    padding: 7px 12px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+
+/* ---------- Filtros del listado de usuarios ---------- */
+
+.admin-filtros {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    background-color: var(--color-superficie-tinte);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-chico);
+}
+
+.admin-filtros label {
+    margin: 0 0 6px;
+}
+
+/* El select no tiene reglas globales en la hoja. Se le da aqui el
+   mismo molde que reciben los inputs para que los dos campos del
+   filtro no se vean distintos uno del otro. */
+.admin-filtros input[type="text"],
+.admin-filtros select {
+    min-width: 210px;
+    padding: 9px 12px;
+    background-color: var(--color-superficie-tinte-alta);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-chico);
+    color: var(--color-texto);
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.admin-filtros .boton {
+    padding: 9px 22px;
+}
+
+.paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.paginacion-enlace {
+    padding: 8px 16px;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-chico);
+    font-size: 0.85rem;
+    color: var(--color-texto);
+    text-decoration: none;
+    transition: all var(--transicion);
+}
+
+.paginacion-enlace:hover {
+    border-color: var(--color-primary);
+    color: var(--color-texto);
+}
+
+.paginacion-inactiva {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.paginacion-info {
+    font-size: 0.83rem;
+    color: var(--color-texto-suave);
+}
+
+/* ---------- Graficas ---------- */
+
+/* Las tres graficas de la consigna son barras de CSS: el servidor
+   calcula el alto (o el ancho) de cada una y lo deja en el estilo
+   inline. No dependen de Chart.js ni de internet, por eso no se
+   pueden "no cargar": funcionan en cualquier navegador y sin
+   conexion. */
+.grid-graficas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.grafica {
+    min-width: 0;
+}
+
+.grafica-titulo {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: var(--color-texto-suave);
+    margin: 0 0 4px;
+}
+
+.grafica-lienzo {
+    height: 240px;
+    padding: 12px 4px 0;
+}
+
+/* Contenedor de barras verticales: las columnas se estiran hasta
+   el alto del lienzo y cada barra crece de abajo hacia arriba. */
+.grafica-barras {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    height: 100%;
+}
+
+.grafica-bar-col {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* El relleno ocupa todo el alto sobrante y la barra cuelga de su
+   base. Sin este paso, el alto porcentual no tendria un contenedor
+   con altura definida contra el cual calcularse. */
+.grafica-bar-relleno {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.grafica-bar {
+    background: var(--color-suave);
+    border-radius: 4px 4px 0 0;
+}
+
+.grafica-barras .grafica-bar {
+    width: min(100%, 52px);
+}
+
+.grafica-bar-rotulo {
+    font-size: 0.7rem;
+    color: var(--color-texto-suave);
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Balance acumulado: barras horizontales, asi la etiqueta de cada
+   fecha entra a la izquierda y no se pisan entre si. */
+.grafica-lienzo--horizontal {
+    height: auto;
+    min-height: 240px;
+    padding: 6px 4px;
+}
+
+.grafica-barras--horizontal {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 7px;
+    height: auto;
+}
+
+.grafica-bar-fila {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grafica-barras--horizontal .grafica-bar-rotulo {
+    flex: 0 0 96px;
+    text-align: right;
+}
+
+.grafica-barras--horizontal .grafica-bar {
+    height: 12px;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Estado vacio: sustituye a las barras cuando la consulta no trae
+   nada. Es preferible a un recuadro gris sin informacion. */
+.grafica-vacia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 240px;
+    padding: 20px;
+    text-align: center;
+    border: 1px dashed var(--color-borde);
+    border-radius: var(--radio-chico);
+    background-color: var(--color-superficie-tinte);
+    color: var(--color-texto-suave);
+    font-size: 0.86rem;
+}
+
+/* Los numeros crudos se imprimen siempre debajo de las barras: son
+   la lectura exacta de cada una y no dependen de nada mas que del
+   HTML. */
+.grafica-datos {
+    list-style: none;
+    margin: 14px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-borde);
+    font-size: 0.82rem;
+    color: var(--color-texto-suave);
+}
+
+.grafica-datos li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 0;
+}
+
+.grafica-datos .grafica-dato-valor {
+    font-weight: 600;
+    color: var(--color-texto);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Modal de operacion ---------- */
+
+.modal {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 430px;
+    width: calc(100% - 32px);
+    color: var(--color-texto);
+}
+
+.modal::backdrop {
+    background-color: rgba(44, 1, 0, 0.52);
+}
+
+.modal-tarjeta {
+    background: var(--superficie-gradiente-alta);
+    border: 1px solid var(--color-borde);
+    border-top: 3px solid var(--color-primary);
+    border-radius: var(--radio);
+    padding: 26px;
+    box-shadow: var(--sombra-4), var(--luz-superior-fuerte);
+}
+
+.modal-encabezado {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.modal-encabezado h2 {
+    font-size: 1.2rem;
+}
+
+.modal-cerrar {
+    background: none;
+    border: none;
+    color: var(--color-texto-suave);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color var(--transicion);
+}
+
+.modal-cerrar:hover {
+    color: var(--color-texto);
+}
+
+.modal-datos {
+    background-color: var(--color-superficie-tinte);
+    border-radius: var(--radio-chico);
+    padding: 14px 16px;
+    margin-bottom: 4px;
+}
+
+.modal-datos > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+.modal-datos dt {
+    font-size: 0.82rem;
+    color: var(--color-texto-suave);
+}
+
+.modal-datos dd {
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.modal-resumen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal-resumen > div {
+    background-color: var(--color-superficie-tinte);
+    border-radius: var(--radio-chico);
+    padding: 13px;
+}
+
+.modal-resumen span {
+    display: block;
+    font-size: 0.73rem;
+    color: var(--color-texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 5px;
+}
+
+.modal-resumen strong {
+    font-size: 1.02rem;
+}
+
+.modal-error {
+    color: var(--color-error);
+    font-size: 0.83rem;
+    min-height: 20px;
+    margin-top: 10px;
+}
+
+.modal-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.modal-acciones .boton {
+    flex: 1;
+}
+
+.boton:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+.boton:disabled:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* ---------- Responsivo ---------- */
+
+@media (max-width: 900px) {
+    /* En una sola columna la escena de portada se apila: texto,
+       mascota y botones. Sin esto el centro se comprime y el
+       halo queda fuera de pantalla. */
+    .portada-escena {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .portada-texto,
+    .portada-botonera,
+    .portada-escena > .simi-escena {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .portada-escena > .simi-escena {
+        grid-row: 2;
+    }
+
+    .portada-escena > .portada-botonera {
+        grid-row: 3;
+    }
+
+    .dashboard-columnas {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-columna {
+        margin-top: 20px;
+    }
+
+    .panel {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 640px) {
+    .portada h1 {
+        font-size: 1.7rem;
+    }
+
+    .portada {
+        padding: 38px 16px 32px;
+    }
+
+    .mascota-portada {
+        width: 168px;
+        height: 168px;
+    }
+
+    .mascota-halo {
+        width: 212px;
+        height: 212px;
+    }
+
+    .mascota-vacia {
+        width: 84px;
+        height: 84px;
+    }
+
+    .mascota-resultado {
+        width: 64px;
+        height: 64px;
+    }
+
+    .simi-escena-resultado .mascota-halo {
+        width: 108px;
+        height: 108px;
+    }
+
+    .simi-escena-resultado .simi-burbuja {
+        max-width: 100%;
+    }
+
+    .simi-burbuja {
+        max-width: 100%;
+    }
+
+    .portada-botonera .boton {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .auth-tarjeta {
+        padding: 24px 20px;
+    }
+
+    .cabecera-contenido {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .seccion {
+        margin-top: 38px;
+    }
+
+    .grid-indicadores {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .indicador-valor {
+        font-size: 1.3rem;
+    }
+
+    .actividad-resumen {
+        grid-template-columns: 1fr;
+    }
+
+    .leyenda-portafolio li {
+        flex-wrap: wrap;
+    }
+
+    .leyenda-porcentaje {
+        margin-left: auto;
+    }
+
+    .saludo h1 {
+        font-size: 1.35rem;
+    }
+
+    .grafica-lienzo,
+    .grafica-vacia {
+        height: 200px;
+    }
+
+    .admin-filtros input[type="text"],
+    .admin-filtros select {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+
+/* ============================================================
+   Barra lateral derecha de navegacion
+   Reemplaza a la cabecera superior. Ocupa el lado izquierdo de la
+   ventana y el body reserva su ancho con padding-left, asi el
+   contenido nunca queda debajo.
+
+   Estados:
+     body                    -> barra abierta (252px)
+     body.lateral-min        -> barra minimizada (72px, solo iconos)
+   ============================================================ */
+
+.lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 252px;
+    height: 100vh;
+    background-color: var(--color-banda);
+    border-right: 1px solid var(--color-banda-borde);
+    box-shadow: 8px 0 26px rgba(61, 3, 1, 0.20);
+    display: flex;
+    flex-direction: column;
+    z-index: 60;
+    overflow: hidden;
+    transition: width var(--transicion);
+}
+
+body {
+    padding-left: 252px;
+    transition: padding-left var(--transicion);
+}
+
+body.lateral-min {
+    padding-left: 72px;
+}
+
+body.lateral-min .lateral {
+    width: 72px;
+}
+
+/* ---------- Tope: marca + boton de minimizar ---------- */
+
+.lateral-tope {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 14px;
+    min-height: 74px;
+    border-bottom: 1px solid var(--color-banda-borde);
+}
+
+.lateral-marca {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.lateral-marca-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.lateral-toggle {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--color-banda-borde);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-banda-texto-suave);
+    cursor: pointer;
+    transition: background-color var(--transicion), color var(--transicion),
+                transform var(--transicion);
+}
+
+.lateral-toggle:hover {
+    background-color: var(--color-banda-hover);
+    color: var(--color-banda-texto);
+}
+
+.lateral-toggle svg {
+    width: 18px;
+    height: 18px;
+}
+
+body.lateral-min .lateral-marca {
+    display: none;
+}
+
+body.lateral-min .lateral-tope {
+    justify-content: center;
+    padding: 16px 8px;
+}
+
+/* La flecha apunta hacia la barra cuando esta abierta y hacia fuera
+   cuando esta minimizada. */
+body.lateral-min .lateral-toggle {
+    transform: rotate(180deg);
+}
+
+/* ---------- Menu ---------- */
+
+.lateral-menu {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 14px 10px;
+}
+
+.lateral-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: var(--radio-chico);
+    color: var(--color-banda-texto-suave);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--transicion), color var(--transicion);
+}
+
+.lateral-item svg {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.lateral-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lateral-item:hover {
+    background-color: var(--color-banda-hover);
+    color: var(--color-banda-texto);
+}
+
+.lateral-item.activo {
+    background-color: var(--color-banda-hover);
+    color: var(--color-banda-texto);
+    box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.lateral-item-destacado {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    margin-top: 6px;
+}
+
+.lateral-item-destacado:hover {
+    background-color: var(--color-primary);
+    filter: brightness(1.12);
+    color: var(--color-light);
+}
+
+/* ---------- Pie de la barra: usuario y salida ---------- */
+
+.lateral-pie {
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.lateral-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    overflow: hidden;
+}
+
+.lateral-avatar {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-banda-borde);
+    background-color: var(--color-banda-hondo);
+}
+
+.lateral-nombre {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-banda-texto);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lateral-nota {
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--color-banda-texto-suave);
+    padding: 4px 10px 6px;
+    white-space: normal;
+}
+
+/* ---------- Estado minimizado: solo iconos ---------- */
+
+body.lateral-min .lateral-item {
+    justify-content: center;
+    padding: 11px;
+}
+
+body.lateral-min .lateral-item span,
+body.lateral-min .lateral-nombre,
+body.lateral-min .lateral-nota {
+    display: none;
+}
+
+body.lateral-min .lateral-usuario {
+    justify-content: center;
+    padding: 6px 0;
+}
+
+body.lateral-min .lateral-pie {
+    padding: 12px 8px;
+}
+
+/* ---------- Chica: la barra abierta tapa el contenido ---------- */
+
+@media (max-width: 768px) {
+    body,
+    body.lateral-min {
+        padding-left: 72px;
+    }
+
+body:not(.lateral-min) .lateral {
+        box-shadow: 14px 0 44px rgba(61, 3, 1, 0.32);
+    }
+}
+
+/* ---------- Boton compacto (tablas y listados) ---------- */
+
+.boton-compacto {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+}
+
+/* ---------- Factura simulada ---------- */
+
+.factura {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    color: #1b262c;
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+    padding: 28px 32px 22px;
+    box-shadow: 0 6px 22px rgba(15, 23, 42, 0.08);
+}
+
+.factura-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 2px solid var(--color-banda-fondo);
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+}
+
+.factura-titulo {
+    margin: 4px 0 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-banda-fondo);
+    font-weight: 700;
+}
+
+.factura-meta {
+    text-align: right;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.factura-numero {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-banda-fondo);
+}
+
+.factura-datos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 28px;
+    margin-bottom: 18px;
+}
+
+.factura-campo {
+    font-size: 0.9rem;
+}
+
+.factura-campo strong {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-texto-suave);
+    margin-bottom: 2px;
+}
+
+.factura-detalle,
+.factura-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.factura-detalle th,
+.factura-tabla th {
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-texto-suave);
+    border-bottom: 1px solid var(--color-borde);
+    padding: 8px 10px;
+}
+
+.factura-detalle td,
+.factura-tabla td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--color-borde);
+    vertical-align: top;
+}
+
+.factura-total {
+    text-align: right;
+    margin-top: 16px;
+}
+
+.factura-total .factura-total-monto {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-banda-fondo);
+}
+
+.factura-leyenda {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--color-borde);
+    font-size: 0.78rem;
+    color: var(--color-texto-suave);
+    line-height: 1.5;
+}
+
+.factura-acciones {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.factura-pago {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    background: var(--color-banda-fondo);
+    color: var(--color-banda-texto);
+}
+
+/* ---------- Impresion: solo la factura ---------- */
+
+@media print {
+    @page {
+        margin: 12mm;
+    }
+
+    body {
+        background: #fff;
+        padding-left: 0;
+    }
+
+    .lateral,
+    .lateral-min,
+    .factura-acciones,
+    .saludo,
+    .alerta {
+        display: none !important;
+    }
+
+    .contenedor {
+        padding: 0 !important;
+        max-width: none !important;
+    }
+
+    .factura {
+        max-width: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+}
+
+/* ---------- Paginas sin barra lateral (login) ----------
+   body carga un padding izquierdo para la sidebar; cuando la pagina
+   oculta la barra (auth) ese padding corre todo el contenido a la
+   derecha y la tarjeta queda descentrada. Esta clase lo anula. */
+
+body.sin-cabecera,
+body.sin-cabecera.lateral-min {
+    padding-left: 0;
+}

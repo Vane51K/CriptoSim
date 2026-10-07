@@ -1,0 +1,22 @@
+# ============================================================
+# CriptoSim - Proteccion de archivos que no son paginas
+# ============================================================
+# database.sql se descarga tal cual si alguien lo pide por
+# HTTP, y con el vienen los hashes de las contrasenas de prueba.
+# Con eso un atacante puede crackearlas por fuera. Lo mismo
+# con cualquier .md o .log que se cuele en el proyecto.
+#
+# OJO Y HONESTIDAD: esto solo funciona en Apache. En el
+# servidor de desarrollo (php -S en el puerto 8080) los
+# .htaccess se IGNORAN por completo, asi que ahi estos
+# archivos siguen siendo descargables. Para el desarrollo
+# local no importa, porque solo escucha en 127.0.0.1.
+# Esta proteccion sirve cuando el proyecto se publique en
+# un servidor Apache de verdad.
+#
+# Sintaxis de Apache 2.4 (la de XAMPP).
+# ============================================================
+
+<FilesMatch "\.(sql|md|log|ini)$">
+    Require all denied
+</FilesMatch>
