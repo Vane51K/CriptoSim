@@ -29,7 +29,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
 
         <?= simi_con_burbuja('bienvenida',
-            'Hola, soy <strong>SIMI</strong>. Te acompanare mientras aprendes a operar. Ningun riesgo, todo simulacion.') ?>
+            'Hola, soy <strong>SIMI</strong>. Te acompañare mientras aprendes a operar. Ningun riesgo, todo simulacion.') ?>
 
 
         <div class="portada-botonera">
