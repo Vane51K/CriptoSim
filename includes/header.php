@@ -34,7 +34,8 @@ $ico = [
     'entrar'    => '<path d="M9.4 4.4H6A1.8 1.8 0 0 0 4.2 6.2v11.6A1.8 1.8 0 0 0 6 19.6h3.4"/><path d="M14.4 8.4 18.4 12l-4 3.6"/><path d="M18.1 12H9.4"/>',
     'registrar' => '<circle cx="9.6" cy="8.6" r="3.6"/><path d="M3.4 19.4c1.3-3.2 3.6-4.8 6.2-4.8 1.1 0 2.1.3 3 .9"/><path d="M17.6 14.4v5.2M15 17h5.2"/>',
     'salir'     => '<path d="M14.6 4.4H18a1.8 1.8 0 0 1 1.8 1.8v11.6A1.8 1.8 0 0 1 18 19.6h-3.4"/><path d="M9.6 8.4 5.6 12l4 3.6"/><path d="M5.9 12h8.7"/>',
-    'cerrar'    => '<path d="M14.6 6.4 9 12l5.6 5.6"/>',
+'cerrar'    => '<path d="M14.6 6.4 9 12l5.6 5.6"/>',
+    'menu'      => '<path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>',
 ];
 
 // Marca la opcion que corresponde a la pagina donde esta el usuario.
@@ -62,7 +63,6 @@ function lateral_item($url, $icono, $texto, $activo = '', $claseExtra = '')
     <script src="<?= e(url('js/lateral.js')) ?>" defer></script>
 </head>
 <body class="<?= $ocultarCabecera ? 'sin-cabecera' : '' ?>">
-    <?php if (!$ocultarCabecera): ?>
     <aside class="lateral" id="lateral">
         <div class="lateral-tope">
             <a href="<?= e(url('index.php')) ?>" class="lateral-marca">
@@ -71,11 +71,18 @@ function lateral_item($url, $icono, $texto, $activo = '', $claseExtra = '')
                     <span class="logo-sub">Simulador educativo</span>
                 </span>
             </a>
+            <?php if (!$ocultarCabecera): ?>
             <button type="button" class="lateral-toggle" id="lateralToggle"
                     aria-controls="lateral" aria-expanded="true"
                     title="Minimizar barra">
                 <svg <?= $icoAtributos ?> aria-hidden="true"><?= $ico['cerrar'] ?></svg>
             </button>
+            <?php else: ?>
+            <button type="button" class="lateral-toggle" id="lateralCerrar"
+                    aria-controls="lateral" title="Cerrar menu">
+                <svg <?= $icoAtributos ?> aria-hidden="true"><?= $ico['cerrar'] ?></svg>
+            </button>
+            <?php endif; ?>
         </div>
 
         <nav class="lateral-menu" aria-label="Menu principal">
@@ -111,7 +118,14 @@ function lateral_item($url, $icono, $texto, $activo = '', $claseExtra = '')
                 <p class="lateral-nota">Saldo virtual. No maneja dinero real.</p>
             <?php endif; ?>
         </div>
-    </aside>
+</aside>
+
+    <?php if ($ocultarCabecera): ?>
+    <button type="button" class="lateral-flotante" id="lateralFlotante"
+            aria-controls="lateral" aria-expanded="false" title="Ver menu">
+        <svg <?= $icoAtributos ?> aria-hidden="true"><?= $ico['menu'] ?></svg>
+    </button>
+    <div class="lateral-fondo" id="lateralFondo"></div>
     <?php endif; ?>
 
     <main class="contenedor">

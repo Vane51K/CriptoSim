@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $titulo = 'Crear cuenta';
+$ocultarCabecera = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>
 

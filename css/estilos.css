@@ -2072,8 +2072,8 @@ input:focus {
     display: flex;
     flex-direction: column;
     z-index: 60;
-    overflow: hidden;
-    transition: width var(--transicion);
+overflow: hidden;
+    transition: width var(--transicion), transform var(--transicion);
 }
 
 body {
@@ -2458,12 +2458,73 @@ body:not(.lateral-min) .lateral {
     }
 }
 
-/* ---------- Paginas sin barra lateral (login) ----------
+/* ---------- Paginas sin barra lateral fija (login y registro) ----------
    body carga un padding izquierdo para la sidebar; cuando la pagina
    oculta la barra (auth) ese padding corre todo el contenido a la
-   derecha y la tarjeta queda descentrada. Esta clase lo anula. */
+   derecha y la tarjeta queda descentrada. Estas reglas lo anulan y
+   convierten la barra en un cajon que se despliega desde la izquierda
+   con el boton flotante de la esquina. */
 
 body.sin-cabecera,
 body.sin-cabecera.lateral-min {
     padding-left: 0;
+}
+
+body.sin-cabecera .lateral {
+    transform: translateX(-100%);
+}
+
+body.sin-cabecera.lateral-abierta .lateral {
+    transform: translateX(0);
+}
+
+.lateral-flotante {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 70;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--color-banda-borde);
+    border-radius: 12px;
+    background-color: var(--color-banda);
+    color: var(--color-banda-texto);
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(61, 3, 1, 0.28);
+    transition: background-color var(--transicion), color var(--transicion),
+                opacity var(--transicion), visibility var(--transicion);
+}
+
+.lateral-flotante:hover {
+    background-color: var(--color-banda-hover);
+}
+
+.lateral-flotante svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Al desplegar el cajon el boton hamburguesa se oculta: la barra ya
+   trae su propio boton de cerrar y no tiene que quedar tapando el logo. */
+body.lateral-abierta .lateral-flotante {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.lateral-fondo {
+    position: fixed;
+    inset: 0;
+    z-index: 59;
+    background-color: rgba(61, 3, 1, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transicion), visibility var(--transicion);
+}
+
+body.lateral-abierta .lateral-fondo {
+    opacity: 1;
+    visibility: visible;
 }
