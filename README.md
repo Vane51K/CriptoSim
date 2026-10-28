@@ -268,9 +268,3 @@ Relaciones principales:
 - Reportes y transacciones: los indicadores, tablas y graficas muestran datos coherentes con
   el historial cargado.
 - Agregar saldo virtual: se aplica y refleja en el saldo del usuario seleccionado.
-
-### Capturas de pantalla
-
-Las capturas de todas las paginas (publicas, de usuario y de administrador) estan en
-`documentacion/capturas/` y pueden insertarse directamente en el documento tecnico y en el
-manual de usuario.
