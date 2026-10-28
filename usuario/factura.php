@@ -53,10 +53,16 @@ $concepto = strtoupper($factura['tipo']) . ' - ' . $cantidad . ' ' . $simbolo
 $numero = 'F-' . str_pad((string) $factura['id_transaccion'], 6, '0', STR_PAD_LEFT);
 
 $titulo = 'Factura ' . $numero;
+$ocultarCabecera = true;
+$ocultarLateral = true;
+$ocultarCabecera = true;
+$ocultarLateral = true;
+$ocultarCabecera = true;
+$ocultarLateral = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>
 
-<section class="seccion">
+<section class="seccion" style="padding-top: 2rem;">
     <div class="factura" aria-label="Factura simulada">
         <header class="factura-cabecera">
             <div>
@@ -125,11 +131,30 @@ require_once __DIR__ . '/../includes/header.php';
         <a href="<?= e(es_admin()
             ? url('admin/transacciones.php')
             : url('usuario/historial.php')) ?>"
-           class="boton boton-secundario">Volver</a>
-        <button type="button" class="boton boton-primario" onclick="window.print()">
+           class="boton boton-secundario no-print">Volver</a>
+        <button type="button" class="boton boton-primario no-print" onclick="window.print()">
             Imprimir
         </button>
     </div>
 </section>
+
+<script>
+window.addEventListener('beforeprint', function() {
+    var lateral = document.querySelector('.lateral');
+    var fondo = document.querySelector('.lateral-fondo');
+    var flotante = document.querySelector('.lateral-flotante');
+    if (lateral) lateral.style.display = 'none';
+    if (fondo) fondo.style.display = 'none';
+    if (flotante) flotante.style.display = 'none';
+});
+window.addEventListener('afterprint', function() {
+    var lateral = document.querySelector('.lateral');
+    var fondo = document.querySelector('.lateral-fondo');
+    var flotante = document.querySelector('.lateral-flotante');
+    if (lateral) lateral.style.display = '';
+    if (fondo) fondo.style.display = '';
+    if (flotante) flotante.style.display = '';
+});
+</script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

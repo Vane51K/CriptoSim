@@ -11,6 +11,7 @@ $flash = obtener_flash();
 // Paginas que ya dicen su titulo dentro de una tarjeta (login) pueden
 // apagar la barra con $ocultarCabecera = true.
 $ocultarCabecera = $ocultarCabecera ?? false;
+$ocultarLateral = $ocultarLateral ?? $ocultarCabecera;
 
 // Se usa para marcar la opcion activa del menu.
 $paginaActual = basename($_SERVER['SCRIPT_NAME'] ?? '');
@@ -60,9 +61,12 @@ function lateral_item($url, $icono, $texto, $activo = '', $claseExtra = '')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($titulo) ?> - CriptoSim</title>
     <link rel="stylesheet" href="<?= e(url('css/estilos.css')) ?>">
+    <?php if (!$ocultarLateral): ?>
     <script src="<?= e(url('js/lateral.js')) ?>" defer></script>
+    <?php endif; ?>
 </head>
 <body class="<?= $ocultarCabecera ? 'sin-cabecera' : '' ?>">
+    <?php if (!$ocultarLateral): ?>
     <aside class="lateral" id="lateral">
         <div class="lateral-tope">
             <a href="<?= e(url('index.php')) ?>" class="lateral-marca">
@@ -120,12 +124,13 @@ function lateral_item($url, $icono, $texto, $activo = '', $claseExtra = '')
         </div>
 </aside>
 
-    <?php if ($ocultarCabecera): ?>
+    <?php if ($ocultarCabecera && !$ocultarLateral): ?>
     <button type="button" class="lateral-flotante" id="lateralFlotante"
             aria-controls="lateral" aria-expanded="false" title="Ver menu">
         <svg <?= $icoAtributos ?> aria-hidden="true"><?= $ico['menu'] ?></svg>
     </button>
     <div class="lateral-fondo" id="lateralFondo"></div>
+    <?php endif; ?>
     <?php endif; ?>
 
     <main class="contenedor">

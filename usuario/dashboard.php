@@ -28,10 +28,33 @@ $ultimas = obtener_historial($idUsuario, 'todas', 5);
 $mercado = aplicar_precios(listar_mercado());
 $mes = operaciones_este_mes($idUsuario);
 
-// Consejo de SIMI para el cuadro de pensamientos. Se calcula aca
-// para pintarlo ya listo en la primera carga; despues js/consejo.js
-// lo refresca por JSON sin recargar la pagina.
-$consejo = consejo_simi($mercado);
+// Patrimonio total: saldo en caja + valor actual del portafolio al precio vigente
+$patrimonioActual = round($saldo + (float)$portafolio['total'], 2);
+
+// Seguimiento de variacion por cambio de precios
+iniciar_sesion();
+if (!isset($_SESSION['patrimonio_base_' . $idUsuario])) {
+    $_SESSION['patrimonio_base_' . $idUsuario] = $patrimonioActual;
+    $_SESSION['patrimonio_base_ts_' . $idUsuario] = time();
+}
+
+// Permite reiniciar el seguimiento manualmente desde la URL
+if (isset($_GET['reiniciar_patrimonio']) && $_GET['reiniciar_patrimonio'] === '1') {
+    $_SESSION['patrimonio_base_' . $idUsuario] = $patrimonioActual;
+    $_SESSION['patrimonio_base_ts_' . $idUsuario] = time();
+    redirigir('usuario/dashboard.php');
+}
+
+$patrimonioBase = (float)($_SESSION['patrimonio_base_' . $idUsuario] ?? $patrimonioActual);
+$diferenciaPatrimonio = round($patrimonioActual - $patrimonioBase, 2);
+
+if (abs($patrimonioBase) < 0.00001) {
+    $porcentajePatrimonio = 0.00;
+} else {
+    $porcentajePatrimonio = round(($diferenciaPatrimonio / $patrimonioBase) * 100, 2);
+}
+
+$hayVariacionPatrimonio = abs($diferenciaPatrimonio) >= 0.01;
 
 $primerNombre = explode(' ', $usuario['nombre'])[0];
 
@@ -122,21 +145,61 @@ require_once __DIR__ . '/../includes/header.php';
             <?php endif; ?>
         </section>
 
-        <section class="seccion panel consejo" id="consejo-simi"
-                 data-url="<?= e(url('usuario/consejo.php')) ?>">
+        <section class="seccion panel">
             <div class="consejo-encabezado">
                 <img class="consejo-cara"
                      src="<?= e(url('img/simi/simi-pensativo-web.png')) ?>"
                      alt="SIMI pensando" width="88" height="88">
                 <div>
-                    <h2 class="seccion-titulo">Pensamientos de Simi</h2>
-                    <p class="consejo-cuando" data-consejo-cuando>Actualizado <?= e($consejo['cuando']) ?></p>
+                    <h2 class="seccion-titulo">Evolución de tu patrimonio</h2>
+                    <p class="consejo-cuando">Calculado con precios vigentes</p>
                 </div>
             </div>
 
-            <p class="consejo-frase" data-consejo-texto><?= e($consejo['texto']) ?></p>
+            <div class="grid-indicadores" style="margin-top:1rem;">
+                <div class="indicador">
+                    <p class="indicador-etiqueta">Patrimonio total</p>
+                    <p class="indicador-valor"><?= e(formato_q($patrimonioActual)) ?></p>
+                    <p class="indicador-pie">Saldo + valor actual del portafolio</p>
+                </div>
 
-            <p class="consejo-aviso">Lectura educativa del mercado simulado. SIMI no asesora sobre inversiones reales.</p>
+                <div class="indicador">
+                    <p class="indicador-etiqueta">Cambio por precio de cripto</p>
+                    <?php if ($hayVariacionPatrimonio): ?>
+                        <p class="indicador-valor" style="color: <?= $diferenciaPatrimonio >= 0 ? '#22c55e' : '#ef4444' ?>;">
+                            <?= ($diferenciaPatrimonio >= 0 ? '+' : '') . e(formato_q($diferenciaPatrimonio)) ?>
+                        </p>
+                        <p class="indicador-pie" style="color: <?= $diferenciaPatrimonio >= 0 ? '#22c55e' : '#ef4444' ?>;">
+                            <?= ($porcentajePatrimonio >= 0 ? '+' : '') . e(number_format($porcentajePatrimonio, 2, '.', ',')) ?>%
+                        </p>
+                    <?php else: ?>
+                        <p class="indicador-valor">Sin cambio</p>
+                        <p class="indicador-pie">Sin variación significativa desde el último seguimiento</p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="indicador">
+                    <p class="indicador-etiqueta">Desde el último seguimiento</p>
+                    <p class="indicador-valor"><?= e(formato_q($patrimonioBase)) ?></p>
+                    <p class="indicador-pie">
+                        <a href="<?= e(url('usuario/dashboard.php?reiniciar_patrimonio=1')) ?>" class="enlace-subrayado">Reiniciar seguimiento</a>
+                    </p>
+                </div>
+            </div>
+
+            <p class="consejo-frase" style="margin-top:1rem;">
+                <?php if ($hayVariacionPatrimonio): ?>
+                    <?= $diferenciaPatrimonio >= 0 ? 'Tu patrimonio subió' : 'Tu patrimonio bajó' ?>
+                    <?= e(formato_q(abs($diferenciaPatrimonio))) ?>
+                    (<?= ($porcentajePatrimonio >= 0 ? '+' : '') . e(number_format($porcentajePatrimonio, 2, '.', ',')) ?>%)
+                    por el cambio en el valor de tus criptomonedas. El saldo en efectivo no cambia con los precios.
+                <?php else: ?>
+                    Los precios cambiaron poco y tu patrimonio se mantiene estable respecto al último seguimiento.
+                    El saldo en efectivo no cambia con los precios.
+                <?php endif; ?>
+            </p>
+
+            <p class="consejo-aviso">Información educativa. El saldo solo cambia al comprar, vender o recargar.</p>
         </section>
     </div>
 
@@ -254,7 +317,5 @@ require_once __DIR__ . '/../includes/header.php';
         <?php endforeach; ?>
     </div>
 </section>
-
-<script src="<?= e(url('js/consejo.js')) ?>" defer></script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

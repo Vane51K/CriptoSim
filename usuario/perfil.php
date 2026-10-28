@@ -130,18 +130,39 @@ require_once __DIR__ . '/../includes/header.php';
         seguir simulando cuando no te queda saldo disponible.
     </p>
 
+    <p class="ayuda"><strong>Recarga rápida</strong></p>
+    <p class="ayuda">Debes agregar un número de tarjeta válido para usar estos botones.</p>
+    <div class="grid-tarjetas" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">
+        <?php foreach ([1000, 2500, 5000, 10000, 20000] as $montoRapido): ?>
+            <form method="POST" action="" novalidate class="form-recarga-rapida">
+                <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>">
+                <input type="hidden" name="monto" value="<?= e((string)$montoRapido) ?>">
+                <button type="submit" class="boton boton-secundario boton-bloque">+ <?= e(formato_q($montoRapido)) ?></button>
+            </form>
+        <?php endforeach; ?>
+    </div>
+
     <form method="POST" action="" novalidate class="recarga">
         <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>">
 
-        <label for="monto">Monto a recargar</label>
         <div class="recarga-fila">
-            <input type="number" id="monto" name="monto"
-                   min="0.01" max="1000000" step="0.01"
-                   placeholder="5000.00" value="<?= e($montoForm) ?>">
+            <div>
+                <label for="numero_tarjeta">Número de tarjeta (simulado)</label>
+                <input type="text" id="numero_tarjeta" name="numero_tarjeta" inputmode="numeric" autocomplete="cc-number" maxlength="19" pattern="([0-9]{4} ){3}[0-9]{4}" placeholder="1234 5678 9012 3456" required>
+                <p class="ayuda">Debe tener 16 dígitos</p>
+            </div>
+            <div>
+                <label for="monto">Monto a recargar</label>
+                <input type="number" id="monto" name="monto"
+                       min="0.01" max="1000000" step="0.01"
+                       placeholder="5000.00" value="<?= e($montoForm) ?>">
+            </div>
+        </div>
+        <div style="margin-top: 1rem;">
             <button type="submit" class="boton boton-primario">Recargar</button>
         </div>
-        <p class="ayuda">
-            Entre Q0.01 y <?= e(formato_q(RECARGA_MAXIMA)) ?> por recarga.
+        <p class="ayuda" style="margin-top: 0.75rem;">
+            Datos de tarjeta únicamente ilustrativos. Entre Q0.01 y <?= e(formato_q(RECARGA_MAXIMA)) ?> por recarga.
         </p>
     </form>
 </section>
@@ -219,5 +240,64 @@ require_once __DIR__ . '/../includes/header.php';
     desde el administrador y registrate de nuevo. La consigna no pide un
     formulario de edicion de perfil.
 </p>
+
+<script>
+    (function () {
+        const input = document.getElementById('numero_tarjeta');
+        const rapidas = document.querySelectorAll('.form-recarga-rapida');
+
+        if (!input) {
+            return;
+        }
+
+        function tarjetaValida() {
+            return /^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$/.test(input.value);
+        }
+
+        function actualizarBotones() {
+            rapidas.forEach(function (form) {
+                const boton = form.querySelector('button');
+                if (!boton) {
+                    return;
+                }
+                if (tarjetaValida()) {
+                    boton.disabled = false;
+                    boton.classList.remove('boton-deshabilitado');
+                } else {
+                    boton.disabled = true;
+                    boton.classList.add('boton-deshabilitado');
+                }
+            });
+        }
+
+        input.addEventListener('input', function () {
+            let valor = input.value.replace(/\D/g, '').slice(0, 16);
+            valor = valor.replace(/(.{4})/g, '$1 ').trim();
+            input.value = valor;
+            actualizarBotones();
+        });
+
+        input.addEventListener('paste', function (e) {
+            e.preventDefault();
+            const texto = (e.clipboardData || window.clipboardData).getData('text');
+            let valor = texto.replace(/\D/g, '').slice(0, 16);
+            valor = valor.replace(/(.{4})/g, '$1 ').trim();
+            input.value = valor;
+            actualizarBotones();
+        });
+
+        rapidas.forEach(function (form) {
+            form.addEventListener('submit', function (e) {
+                if (!tarjetaValida()) {
+                    e.preventDefault();
+                    input.focus();
+                    input.reportValidity ? input.reportValidity() : alert('Ingresa un número de tarjeta válido (16 dígitos).');
+                }
+            });
+        });
+
+        actualizarBotones();
+    })();
+</script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
