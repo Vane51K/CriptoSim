@@ -130,6 +130,8 @@ desarrollo.
 | Usuario demo | lyuman@criptosim.com  | Usuario123*  | 7,325.53          |
 | Usuario demo | ksanchez@criptosim.com | Usuario123* | 6,551.52          |
 
+**Saldo inicial al registrarse:** Al crear una cuenta nueva, el sistema asigna automáticamente un **saldo ficticio inicial** configurado desde `config_sistema.saldo_inicial` (por defecto en la base: **Q10,000.00**). Este saldo es completamente ficticio y puede recargarse desde el perfil del usuario con una tarjeta simulada.
+
 El administrador ve el area administrativa; los demas ven el area de usuario. Los saldos ya
 incluyen operaciones ficticias cargadas por los scripts de datos demo para que los reportes y
 las graficas tengan informacion que mostrar en la presentacion.
@@ -148,7 +150,7 @@ las graficas tengan informacion que mostrar en la presentacion.
 - Historial completo de compras y ventas con filtros.
 - Factura simulada de cada operacion (correlativa, con boton de imprimir).
 - Consejo aleatorio del dia (funcionalidad creativa).
-- Perfil con los datos de la cuenta.
+- Perfil con los datos de la cuenta y **recarga de saldo simulada con tarjeta** (16 dígitos, validación visual, botones rápidos).
 
 **Area administrativa:**
 - Dashboard con metricas generales.
