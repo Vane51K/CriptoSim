@@ -169,7 +169,6 @@ PROYECTO_FINAL/
 ├── datos_demo.sql             Datos de demostracion (operaciones)
 ├── datos_usuarios_demo.sql    Usuarios demo adicionales
 ├── README.md                  Documentacion general del proyecto
-├── INSTRUCCIONES.MD           Documento de requisitos original
 ├── .htaccess                  Control de acceso a rutas sensibles
 ├── Encender CriptoSim.bat     Arranque del servidor local
 ├── Apagar CriptoSim.bat       Detencion del servidor local
@@ -220,9 +219,7 @@ PROYECTO_FINAL/
 │
 ├── img/
 │   └── simi/                  Imagenes de la mascota
-│
-└── documentacion/
-    └── capturas/              Capturas de pantalla para la documentacion
+
 ```
 
 ## 13. Base de datos
